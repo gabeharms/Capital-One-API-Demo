@@ -1,79 +1,96 @@
 <html>
     <body>
-        <h3><%= params[:success] %></h3> <br /><br />
-        
-        <h1>C1 Webapp API</h1>
-        <form id="testForm">
-            Customer ID:<br>
+        <div class="home-container customer-home">
+          <div class="home-header">
+            <div class="home-logo">
+              <%= image_tag("capitalone-logo-white.png", alt: "Capital One Logo", size: "255x96") %>
+              <div class="clear-float"></div>
+            </div>
+          </div>
+          <div class="home-login">
+            <div class="row">
+              <div class="col-md-6 col-md-offset-3">
+                <h1>Simulate a Notification</h1><br />
+                <form id="testForm">
+                    Choose a Customer ID:&nbsp;
 
-                <%= 
-                select_tag :customer_id,  options_for_select((1..100).to_a) # we get the data from here!
-                %>
+                        <%= 
+                        select_tag :customer_id,  options_for_select((1..100).to_a) # we get the data from here!
+                        %>
+                        
+                        <input type="hidden" name="title" id ="title_field"><br />
+                        <input type="hidden" name="ticket_category_id" id="ticket_category_id_field"><br />
+                        <input type="hidden" name="ticket_status_id" id="ticket_status_id_field"><br />
+                        <input type="hidden" name="sender_url" value="Norway" id="sender_url">
+                </form>
                 
-                <input type="hidden" name="title" id ="title_field"><br />
-                <input type="hidden" name="ticket_category_id" id="ticket_category_id_field"><br />
-                <input type="hidden" name="ticket_status_id" id="ticket_status_id_field"><br />
-                <input type="hidden" name="sender_url" value="Norway" id="sender_url">
-        </form>
-        
-        <button class="target" name="Granted Auto Loan" >Granted Auto Loan</button>
-        <button class="target" name="Increased Credit Line">Increased Credit Line</button>
-        <button class="target" name="Bank Statement Available">Bank Statement Available</button>
-        <button class="target" name="Fraud Detected">Fraud Detected</button>
+                <button class="target button2" name="Granted Auto Loan" >Granted Auto Loan</button><br /><br />
+                <button class="target button2" name="Increased Credit Line">Increased Credit Line</button><br /><br />
+                <button class="target button2" name="Bank Statement Available">Bank Statement Available</button><br /><br />
+                <button class="target button2" name="Fraud Detected">Fraud Detected</button><br /><br />
 
-        
-       
-        <script>
-            var elem = document.getElementById("sender_url");
-            web_url = String( window.location) //.substring(0, window.location.search("?"));
-            var index = web_url.indexOf("?");
-            web_url = web_url.substring(0, index);
-            elem.value = web_url;
-        </script>
-        <script>
-            //$("#testForm").submit(function(event) { 
-            $(".target").click(function(event) {
                 
-                //$("#cust_id_field").val("2");
-                $("#title_field").val(event.target.name.toString());
-                $("#ticket_category_id_field").val("1");
-                $("#ticket_status_id_field").val("2");
+               
+                <script>
+                    var elem = document.getElementById("sender_url");
+                    web_url = String( window.location) //.substring(0, window.location.search("?"));
+                    var index = web_url.indexOf("?");
+                    web_url = web_url.substring(0, index);
+                    elem.value = web_url;
+                </script>
+                <script>
+                    //$("#testForm").submit(function(event) { 
+                    $(".target").click(function(event) {
+                        
+                        //$("#cust_id_field").val("2");
+                        $("#title_field").val(event.target.name.toString());
+                        $("#ticket_category_id_field").val("1");
+                        $("#ticket_status_id_field").val("2");
 
-                $.ajax({
-                type: "POST",
-                url: "https://shielded-lowlands-8250.herokuapp.com/update",
-                //url: "https://ruby-gabeharms.c9.io/update",
-                // The key needs to match your method's input parameter (case-sensitive).
-                data: JSON.stringify($('form').serializeObject()),
-                //data: JSON.stringify(api_req.serializeObject()),
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
+                        $.ajax({
+                        type: "POST",
+                        url: "https://shielded-lowlands-8250.herokuapp.com/update",
+                        //url: "https://ruby-gabeharms.c9.io/update",
+                        // The key needs to match your method's input parameter (case-sensitive).
+                        data: JSON.stringify($('form').serializeObject()),
+                        //data: JSON.stringify(api_req.serializeObject()),
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
 
-                });
-            });
+                        });
+                    });
+                        
+                        
+                    $.fn.serializeObject = function()
+                    {
+                        var o = {};
+                        var a = this.serializeArray();
+                        $.each(a, function() {
+                            if (o[this.name] !== undefined) {
+                                if (!o[this.name].push) {
+                                    o[this.name] = [o[this.name]];
+                                }
+                                o[this.name].push(this.value || '');
+                            } else {
+                                o[this.name] = this.value || '';
+                            }
+                        });
+                        return o;
+                    };
+                </script>
                 
-                
-            $.fn.serializeObject = function()
-            {
-                var o = {};
-                var a = this.serializeArray();
-                $.each(a, function() {
-                    if (o[this.name] !== undefined) {
-                        if (!o[this.name].push) {
-                            o[this.name] = [o[this.name]];
-                        }
-                        o[this.name].push(this.value || '');
-                    } else {
-                        o[this.name] = this.value || '';
-                    }
-                });
-                return o;
-            };
-        </script>
-        
-        <div>
-        <br />
-        <%= params[:status] %>
+                <div>
+                <br />
+                <%= params[:status] %>
+                </div>
+
+                </div>
+            </div>
+
+          </div>
+          <div class="home-footer">
+              
+          </div>
         </div>
     </body>
 </html>
